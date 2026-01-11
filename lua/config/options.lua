@@ -94,10 +94,10 @@ vim.opt.guicursor = {
 	"sm:block-blinkwait175-blinkoff150-blinkon175", -- Showmatch mode
 }
 
--- Folding Settings
-vim.opt.foldmethod = "expr" -- Use expression for folding
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- Use treesitter for folding
-vim.opt.foldlevel = 99 -- Keep all folds open by default
+-- Folding Settings disabled as ufo.lua handles this now.
+-- vim.opt.foldmethod = "expr" -- Use expression for folding
+-- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- Use treesitter for folding
+-- vim.opt.foldlevel = 99 -- Keep all folds open by default
 
 -- Split Behavior
 vim.opt.splitbelow = true -- Horizontal splits open below

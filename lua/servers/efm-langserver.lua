@@ -24,6 +24,10 @@ return function(capabilities)
 	local cpplint = require("efmls-configs.linters.cpplint") -- c/cpp linter
 	local clangformat = require("efmls-configs.formatters.clang_format") -- c/cpp formatter
 	local solhint = require("efmls-configs.linters.solhint") -- solidity linter
+  local csharpier = {
+  formatCommand = "dotnet csharpier --write-stdout",
+  formatStdin = true,
+}
 
 	vim.lsp.config("efm", {
 		capabilities = capabilities,
@@ -77,6 +81,7 @@ return function(capabilities)
 				typescript = { eslint_d, prettier_d },
 				typescriptreact = { eslint_d, prettier_d },
 				vue = { eslint_d, prettier_d },
+        cs = { csharpier },
 			},
 		},
 	})

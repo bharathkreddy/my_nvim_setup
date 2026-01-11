@@ -27,6 +27,7 @@ return {
 		"hrsh7th/cmp-nvim-lsp", -- nvim-cmp source for LSP-based autocompletion
 		"hrsh7th/cmp-buffer", -- nvim-cmp source for words from the current buffer
 		"hrsh7th/cmp-path", -- nvim-cmp source for filesystem paths
+    "hrsh7th/cmp-cmdline",
 		"hrsh7th/cmp-nvim-lsp-signature-help", -- function signatures
 	},
 	config = function()
@@ -34,7 +35,27 @@ return {
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
 
+    -- Check if copilot suggestion is visible
+		local has_copilot, copilot_suggestion = pcall(require, "copilot.suggestion")
+
 		require("luasnip.loaders.from_vscode").lazy_load()
+    -- Cmdline completions
+    cmp.setup.cmdline(":", {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+        { name = "path" },
+      }, {
+        { name = "cmdline" },
+      }),
+    })
+
+    -- Search completions
+    cmp.setup.cmdline({ "/", "?" }, {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = "buffer" },
+      },
+    })
 
 		cmp.setup({
 			snippet = {
@@ -47,7 +68,7 @@ return {
 				format = lspkind.cmp_format({
 					mode = "symbol_text",
 					menu = {
-						codeium = "",
+						copilot = "",
 						luasnip = "",
 						buffer = "",
 						path = "",
@@ -64,15 +85,53 @@ return {
 				["<C-Space>"] = cmp.mapping.complete(),
 				["<C-e>"] = cmp.mapping.abort(),
 				["<CR>"] = cmp.mapping.confirm({ select = false }),
+				-- Smart Tab: Copilot -> Completion -> Snippet -> Normal Tab
+				["<Tab>"] = cmp.mapping(function(fallback)
+					if has_copilot and copilot_suggestion.is_visible() then
+						copilot_suggestion.accept()
+					elseif cmp.visible() then
+						cmp.select_next_item()
+					elseif luasnip.expand_or_jumpable() then
+						luasnip.expand_or_jump()
+					else
+						fallback()
+					end
+				end, { "i", "s" }),
+        -- Smart Shift-Tab: Completion <- Snippet <- Normal
+				["<S-Tab>"] = cmp.mapping(function(fallback)
+					if cmp.visible() then
+						cmp.select_prev_item()
+					elseif luasnip.jumpable(-1) then
+						luasnip.jump(-1)
+					else
+						fallback()
+					end
+				end, { "i", "s" }),
 			}),
 
 			sources = {
-				{ name = "codeium" },
-				{ name = "luasnip" },
-				{ name = "nvim_lsp" },
-				{ name = "buffer" },
-				{ name = "path" },
+				{ name = "copilot", group_index = 2 },
+				{ name = "nvim_lsp", group_index = 2 },
+				{ name = "luasnip", group_index = 2 },
+				{ name = "buffer", group_index = 3 },
+				{ name = "path", group_index = 3 },
 				{ name = "nvim_lsp_signature_help" },
+			},
+
+			sorting = {
+				priority_weight = 2,
+				comparators = {
+					-- Prioritize copilot suggestions
+					require("copilot_cmp.comparators").prioritize,
+					cmp.config.compare.offset,
+					cmp.config.compare.exact,
+					cmp.config.compare.score,
+					cmp.config.compare.recently_used,
+					cmp.config.compare.locality,
+					cmp.config.compare.kind,
+					cmp.config.compare.length,
+					cmp.config.compare.order,
+				},
 			},
 		})
 	end,

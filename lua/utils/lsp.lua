@@ -14,13 +14,13 @@ M.on_attach = function(event)
 	}
 
 	-- native neovim keymaps
-	keymap("n", "<leader>gd", "<cmd>Lspsaga peek_definition<CR>", opts) -- goto definition
+	keymap("n", "<leader>gp", "<cmd>Lspsaga peek_definition<CR>", opts) -- goto definition
 	keymap("n", "<leader>gD", "<cmd>Lspsaga goto_definition<CR>", opts) -- goto definition
 	keymap("n", "<leader>gS", "<cmd>vsplit | Lspsaga goto_definition<CR>", opts) -- goto definition in split
 	keymap("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- Code actions
 	keymap("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- Rename symbol
-	keymap("n", "<leader>D", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- Line diagnostics (float)
-	keymap("n", "<leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- Cursor diagnostics
+	keymap("n", "<leader>lD", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- Line diagnostics (float)
+	keymap("n", "<leader>ld", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- Cursor diagnostics
 	keymap("n", "<leader>pd", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- previous diagnostic
 	keymap("n", "<leader>nd", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- next diagnostic
 	keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- hover documentation
@@ -57,7 +57,7 @@ M.on_attach = function(event)
 		keymap("n", "<leader>dc", dap.continue, opts) -- Continue / Start
 		keymap("n", "<leader>do", dap.step_over, opts) -- Step over
 		keymap("n", "<leader>di", dap.step_into, opts) -- Step into
-		keymap("n", "<leader>du", dap.step_out, opts) -- Step out
+		keymap("n", "<leader>dO", dap.step_out, opts) -- Step out
 		keymap("n", "<leader>db", dap.toggle_breakpoint, opts) -- Toggle breakpoint
 		keymap("n", "<leader>dr", dap.repl.open, opts) -- Open DAP REPL
 	end
