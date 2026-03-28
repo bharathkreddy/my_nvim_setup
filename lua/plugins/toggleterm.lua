@@ -7,9 +7,6 @@ return {
 		{ "<leader>tV", "<cmd>ToggleTerm direction=vertical<cr>", desc = "Terminal Vertical" },
 		{ "<leader>tF", "<cmd>ToggleTerm direction=float<cr>", desc = "Terminal Float" },
 		{ "<leader>tA", "<cmd>ToggleTermToggleAll<cr>", desc = "Toggle All Terminals" },
-		{ "<leader>gG", function()
-			require("toggleterm.terminal").Terminal:new({ cmd = "lazygit", direction = "float" }):toggle()
-		end, desc = "LazyGit (Terminal)" },
 	},
 	opts = {
 		size = function(term)

@@ -13,7 +13,7 @@ return {
 	},
 	ft = { "markdown", "md" },
 	keys = {
-		{ "<leader>mr", function() require("render-markdown").toggle() end, desc = "Toggle Markdown Render" },
+		{ "<leader>lm", function() require("render-markdown").toggle() end, desc = "Toggle Markdown Render" },
 	},
 	opts = {
 		enabled = true,

@@ -45,7 +45,7 @@ return {
 		})
 
 		-- Incremental selection keymaps
-		vim.keymap.set("n", "<CR>", function()
+		vim.keymap.set("n", "<leader>v", function()
 			require("nvim-treesitter.incremental_selection").init_selection()
 		end, { desc = "Init Treesitter Selection" })
 		vim.keymap.set("x", "<CR>", function()

@@ -16,24 +16,27 @@ return {
 			separator = "➜",
 			group = "+",
 		},
+		triggers = {
+			{ "<auto>", mode = "nxso" },
+			{ "z", mode = { "n", "v" } },
+		},
 	},
 	config = function(_, opts)
 		local wk = require("which-key")
 		wk.setup(opts)
 
-		-- Register key groups
 		wk.add({
-			-- Top level
+			-- Hidden (Harpoon slots)
 			{ "<leader>1", hidden = true },
 			{ "<leader>2", hidden = true },
 			{ "<leader>3", hidden = true },
 			{ "<leader>4", hidden = true },
 
-			-- Groups
+			-- ===================== Leader groups =====================
 			{ "<leader>b", group = "Buffer" },
 			{ "<leader>c", group = "Copilot" },
 			{ "<leader>d", group = "Debug" },
-			{ "<leader>f", group = "Find/FZF" },
+			{ "<leader>f", group = "Find" },
 			{ "<leader>g", group = "Git" },
 			{ "<leader>h", group = "Harpoon" },
 			{ "<leader>l", group = "LSP" },
@@ -43,17 +46,20 @@ return {
 			{ "<leader>r", group = "Rename/Config" },
 			{ "<leader>s", group = "Split/Search" },
 			{ "<leader>t", group = "Test/Terminal" },
-			{ "<leader>x", group = "Trouble/Diagnostics" },
+			{ "<leader>x", group = "Trouble" },
+			{ "<leader>M", group = "Marks" },
 
-			-- Single keys with descriptions
+			-- ===================== Standalone leaders =====================
+			{ "<leader>-", desc = "Oil Float" },
 			{ "<leader>e", desc = "Toggle File Explorer" },
 			{ "<leader>m", desc = "Focus File Explorer" },
 			{ "<leader>u", desc = "Toggle Undotree" },
+			{ "<leader>v", desc = "Init Treesitter Selection" },
 			{ "<leader>w", desc = "Save" },
-			{ "<leader>q", desc = "Quit" },
+			{ "<leader>z", desc = "Toggle Zen Mode" },
 			{ "<leader>?", desc = "Buffer Keymaps" },
 
-			-- Bracket motions
+			-- ===================== Bracket motions =====================
 			{ "[", group = "Prev" },
 			{ "]", group = "Next" },
 			{ "[b", desc = "Prev Buffer" },
@@ -62,12 +68,18 @@ return {
 			{ "]B", desc = "Move Buffer Right" },
 			{ "[d", desc = "Prev Diagnostic" },
 			{ "]d", desc = "Next Diagnostic" },
+			{ "[h", desc = "Prev Hunk" },
+			{ "]h", desc = "Next Hunk" },
 			{ "[t", desc = "Prev TODO" },
 			{ "]t", desc = "Next TODO" },
 			{ "[[", desc = "Prev Reference" },
 			{ "]]", desc = "Next Reference" },
 
-			-- Fold commands (z prefix)
+			-- ===================== Shift navigation =====================
+			{ "<S-h>", desc = "Prev Buffer" },
+			{ "<S-l>", desc = "Next Buffer" },
+
+			-- ===================== Fold (z prefix) =====================
 			{ "z", group = "Fold" },
 			{ "zR", desc = "Open All Folds" },
 			{ "zM", desc = "Close All Folds" },
@@ -79,34 +91,26 @@ return {
 			{ "zo", desc = "Open Fold" },
 			{ "zc", desc = "Close Fold" },
 
-			-- Flash motions
-			{ "s", desc = "Flash" },
+			-- ===================== Goto (g prefix) =====================
+			{ "g", group = "Goto" },
+			{ "gd", desc = "Peek Definition" },
+			{ "gD", desc = "Goto Definition" },
+			{ "gs", desc = "Flash" },
+			{ "K", desc = "Hover Documentation" },
+
+			-- ===================== Flash =====================
 			{ "S", desc = "Flash Treesitter" },
 
-			-- Oil
-			{ "-", desc = "Oil (Parent Directory)" },
+			-- ===================== Oil =====================
+			{ "-", desc = "Oil (Parent Dir)" },
 
-			-- Mark motions
-			{ "m", group = "Marks" },
-			{ "m,", desc = "Set Next Mark" },
-			{ "m;", desc = "Toggle Mark" },
-			{ "m[", desc = "Prev Mark" },
-			{ "m]", desc = "Next Mark" },
-			{ "m:", desc = "Preview Mark" },
-			{ "dm", group = "Delete Mark" },
-			{ "dm-", desc = "Delete Marks on Line" },
-			{ "dm<space>", desc = "Delete All Marks in Buffer" },
-
-			-- g motions (some are LSP, set in lsp.lua)
-			{ "g", group = "Goto" },
-
-			-- Control keys
+			-- ===================== Control keys =====================
 			{ "<C-\\>", desc = "Toggle Terminal" },
 			{ "<C-h>", desc = "Window Left" },
 			{ "<C-j>", desc = "Window Down" },
 			{ "<C-k>", desc = "Window Up" },
 			{ "<C-l>", desc = "Window Right" },
-      { "<C-s>", desc = "Toggle Flash Search", mode = "c" },
+			{ "<C-s>", desc = "Toggle Flash Search", mode = "c" },
 		})
 	end,
 	keys = {

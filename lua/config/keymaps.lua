@@ -50,16 +50,6 @@ vim.keymap.set("n", "<leader>rc", "<Cmd>e ~/.config/nvim/init.lua<CR>", { desc =
 vim.keymap.set("n", "<leader>m", "<Cmd>NvimTreeFocus<CR>", { desc = "Focus on File Explorer" })
 vim.keymap.set("n", "<leader>e", "<Cmd>NvimTreeToggle<CR>", { desc = "Toggle File Explorer" })
 
--- DAP Keymaps (global)
-vim.keymap.set("n", "<F5>", function() require("dap").continue() end, { desc = "Debug: Continue" })
-vim.keymap.set("n", "<F10>", function() require("dap").step_over() end, { desc = "Debug: Step Over" })
-vim.keymap.set("n", "<F11>", function() require("dap").step_into() end, { desc = "Debug: Step Into" })
-vim.keymap.set("n", "<F12>", function() require("dap").step_out() end, { desc = "Debug: Step Out" })
-vim.keymap.set("n", "<leader>db", function() require("dap").toggle_breakpoint() end, { desc = "Toggle Breakpoint" })
-vim.keymap.set("n", "<leader>dB", function()
-  require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
-end, { desc = "Conditional Breakpoint" })
-
 -- Notification history (mini.notify)
 vim.keymap.set("n", "<leader>nh", function()
 	require("mini.notify").show_history()
@@ -75,9 +65,6 @@ vim.keymap.set("t", "jk", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 -- Quick save
 vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { desc = "Save" })
 
--- Quick quit
-vim.keymap.set("n", "<leader>q", "<cmd>q<cr>", { desc = "Quit" })
-
 -- Clear search highlight
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<cr>", { desc = "Clear Search Highlight" })
 
@@ -88,12 +75,7 @@ vim.keymap.set("n", "<C-a>", "gg<S-v>G", { desc = "Select All" })
 vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv", { desc = "Move Line Down" })
 vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv", { desc = "Move Line Up" })
 
--- Keep cursor centered when scrolling
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half page down (centered)" })
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up (centered)" })
-
-
--- DAP Keymaps (no function keys)
+-- DAP Keymaps
 vim.keymap.set("n", "<leader>dc", function() require("dap").continue() end, { desc = "Debug: Continue/Start" })
 vim.keymap.set("n", "<leader>do", function() require("dap").step_over() end, { desc = "Debug: Step Over" })
 vim.keymap.set("n", "<leader>di", function() require("dap").step_into() end, { desc = "Debug: Step Into" })

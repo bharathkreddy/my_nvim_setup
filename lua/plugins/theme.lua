@@ -1,17 +1,12 @@
 -- ================================================================================================
--- TITLE : melange-nvim
--- ABOUT : A subtle, warm colorscheme for Neovim inspired by Sublime Text's Melange theme.
+-- TITLE : theme
+-- ABOUT : Nightfox (duskfox) colorscheme with transparent background.
 -- LINKS :
---   > github : https://github.com/savq/melange-nvim
+--   > nightfox : https://github.com/EdenEast/nightfox.nvim
+--   > transparent : https://github.com/xiyaowong/nvim-transparent
 -- ================================================================================================
 
 return {
-	-- "savq/melange-nvim",
-	-- lazy = false,
-	-- priority = 1000,
-	-- config = function()
-	-- 	vim.cmd("colorscheme melange")
-	-- end,
 	{
 		"xiyaowong/nvim-transparent",
 		lazy = false,
