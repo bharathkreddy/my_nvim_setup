@@ -30,6 +30,10 @@ return {
 					neotest = true,
 					notify = true,
 					noice = true,
+					indent_blankline = {
+						enabled = true,
+						colored_indent_levels = false,
+					},
 					which_key = true,
 					native_lsp = {
 						enabled = true,
