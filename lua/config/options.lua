@@ -19,6 +19,7 @@ vim.opt.shiftwidth = 2 -- Indent width
 vim.opt.softtabstop = 2 -- Soft tab stop
 vim.opt.expandtab = true -- Use spaces instead of tabs
 vim.opt.smartindent = true -- Smart auto-indenting
+vim.opt.autoindent = true -- Copy indent from current line
 vim.opt.grepprg = "rg --vimgrep" -- Use ripgrep if available
 vim.opt.grepformat = "%f:%l:%c:%m" -- filename, line number, column, content
 
@@ -68,6 +69,8 @@ if vim.fn.isdirectory(undodir_path) == 0 then
 end
 
 -- Behavior Settings
+vim.opt.errorbells = false -- Disable error sounds
+vim.opt.backspace = "indent,eol,start" -- Make backspace behave naturally
 vim.opt.autochdir = false -- Don't change directory automatically
 vim.opt.iskeyword:append("-") -- Treat dash as part of a word
 vim.opt.path:append("**") -- Search into subfolders with `gf`

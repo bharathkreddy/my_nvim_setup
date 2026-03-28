@@ -16,12 +16,15 @@ return {
 			separator = "➜",
 			group = "+",
 		},
+		triggers = {
+			{ "<auto>", mode = "nxso" },
+			{ "z", mode = { "n", "v" } },
+		},
 	},
 	config = function(_, opts)
 		local wk = require("which-key")
 		wk.setup(opts)
 
-		-- Register key groups
 		wk.add({
 			-- =============================================
 			-- Hidden keys (Harpoon quick access)
@@ -32,7 +35,7 @@ return {
 			{ "<leader>4", hidden = true },
 
 			-- =============================================
-			-- Groups (Alphabetical, Single Purpose)
+			-- Groups (Alphabetical)
 			-- =============================================
 			{ "<leader>b", group = "Buffer" },
 			{ "<leader>c", group = "Copilot" },
@@ -43,6 +46,7 @@ return {
 			{ "<leader>l", group = "LSP" },
 			{ "<leader>m", group = "Markdown" },
 			{ "<leader>n", group = "Notifications" },
+			{ "<leader>q", group = "Session" },
 			{ "<leader>r", group = "Replace" },
 			{ "<leader>s", group = "Split" },
 			{ "<leader>t", group = "Test" },
@@ -50,7 +54,6 @@ return {
 			{ "<leader>y", group = "Yank" },
 			{ "<leader>z", group = "Zen" },
 			{ "<leader>M", group = "Marks" },
-			{ "<leader>S", group = "Session" },
 			{ "<leader>T", group = "Terminal" },
 
 			-- =============================================
@@ -60,7 +63,6 @@ return {
 			{ "<leader>E", desc = "Focus File Explorer" },
 			{ "<leader>u", desc = "Undotree" },
 			{ "<leader>w", desc = "Save" },
-			{ "<leader>q", desc = "Quit" },
 			{ "<leader>.", desc = "Edit Config" },
 			{ "<leader>-", desc = "Oil Float" },
 			{ "<leader>?", desc = "Buffer Keymaps" },
@@ -119,7 +121,6 @@ return {
 			{ "<leader>fW", desc = "Grep WORD" },
 			{ "<leader>fd", desc = "Diagnostics (Document)" },
 			{ "<leader>fD", desc = "Diagnostics (Workspace)" },
-			{ "<leader>fL", desc = "Find DLL (Copy Path)" },
 			{ "<leader>fT", desc = "Find TODOs" },
 
 			-- =============================================
@@ -133,6 +134,7 @@ return {
 			{ "<leader>gs", desc = "Stage Hunk" },
 			{ "<leader>gr", desc = "Reset Hunk" },
 			{ "<leader>gS", desc = "Stage Buffer" },
+			{ "<leader>gR", desc = "Reset Buffer" },
 			{ "<leader>gu", desc = "Undo Stage Hunk" },
 			{ "<leader>gp", desc = "Preview Hunk" },
 			{ "<leader>gb", desc = "Blame Line" },
@@ -148,11 +150,9 @@ return {
 			{ "<leader>hn", desc = "Next" },
 
 			-- =============================================
-			-- LSP Group (All LSP operations)
+			-- LSP Group
 			-- =============================================
-			{ "<leader>lp", desc = "Peek Definition" },
-			{ "<leader>ld", desc = "Go to Definition" },
-			{ "<leader>lD", desc = "Definition (Split)" },
+			{ "<leader>ld", desc = "Definition (Split)" },
 			{ "<leader>li", desc = "Implementation" },
 			{ "<leader>lr", desc = "References" },
 			{ "<leader>ly", desc = "Type Definition" },
@@ -160,8 +160,6 @@ return {
 			{ "<leader>ln", desc = "Rename" },
 			{ "<leader>lL", desc = "Line Diagnostics" },
 			{ "<leader>lc", desc = "Cursor Diagnostics" },
-			{ "<leader>l[", desc = "Prev Diagnostic" },
-			{ "<leader>l]", desc = "Next Diagnostic" },
 			{ "<leader>lf", desc = "LSP Finder" },
 			{ "<leader>ls", desc = "Document Symbols" },
 			{ "<leader>lS", desc = "Workspace Symbols" },
@@ -192,6 +190,13 @@ return {
 			{ "<leader>nh", desc = "Notification History" },
 
 			-- =============================================
+			-- Session Group
+			-- =============================================
+			{ "<leader>qs", desc = "Restore Session" },
+			{ "<leader>ql", desc = "Restore Last" },
+			{ "<leader>qd", desc = "Don't Save Session" },
+
+			-- =============================================
 			-- Replace Group (Search & Replace)
 			-- =============================================
 			{ "<leader>rr", desc = "Search & Replace" },
@@ -205,14 +210,7 @@ return {
 			{ "<leader>sh", desc = "Split Horizontal" },
 
 			-- =============================================
-			-- Session Group
-			-- =============================================
-			{ "<leader>Ss", desc = "Restore Session" },
-			{ "<leader>Sl", desc = "Restore Last" },
-			{ "<leader>Sd", desc = "Don't Save Session" },
-
-			-- =============================================
-			-- Test Group (Neotest only)
+			-- Test Group (Neotest)
 			-- =============================================
 			{ "<leader>tt", desc = "Run Nearest Test" },
 			{ "<leader>tf", desc = "Run File Tests" },
@@ -226,7 +224,6 @@ return {
 			{ "<leader>Tv", desc = "Vertical" },
 			{ "<leader>Tf", desc = "Float" },
 			{ "<leader>Ta", desc = "Toggle All" },
-			{ "<leader>Tl", desc = "List Terminals" },
 
 			-- =============================================
 			-- Trouble Group
@@ -265,6 +262,8 @@ return {
 			{ "]t", desc = "Next TODO" },
 			{ "]h", desc = "Next Hunk" },
 			{ "[h", desc = "Prev Hunk" },
+			{ "[d", desc = "Prev Diagnostic" },
+			{ "]d", desc = "Next Diagnostic" },
 
 			-- =============================================
 			-- Fold Commands (z prefix)
@@ -283,6 +282,8 @@ return {
 			-- Goto Group (g prefix)
 			-- =============================================
 			{ "g", group = "Goto" },
+			{ "gd", desc = "Go to Definition" },
+			{ "gD", desc = "Peek Definition" },
 			{ "gs", desc = "Flash" },
 
 			-- =============================================
@@ -298,6 +299,7 @@ return {
 			{ "n", desc = "Next Search Result (Centered)" },
 			{ "N", desc = "Previous Search Result (Centered)" },
 			{ "J", desc = "Join Lines (Keep Cursor)" },
+			{ "K", desc = "Hover Doc" },
 			{ "-", desc = "Oil (Parent Directory)" },
 
 			-- =============================================
@@ -335,15 +337,8 @@ return {
 			-- Insert/Terminal Mode
 			-- =============================================
 			{ "jk", desc = "Exit Insert Mode", mode = "i" },
+			{ "<Esc>", desc = "Exit Terminal Mode", mode = "t" },
 			{ "jk", desc = "Exit Terminal Mode", mode = "t" },
-
-			-- =============================================
-			-- Function Keys (Debug)
-			-- =============================================
-			{ "<F5>", desc = "Debug: Continue" },
-			{ "<F10>", desc = "Debug: Step Over" },
-			{ "<F11>", desc = "Debug: Step Into" },
-			{ "<F12>", desc = "Debug: Step Out" },
 		})
 	end,
 	keys = {
