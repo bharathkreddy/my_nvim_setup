@@ -188,6 +188,9 @@ return {
 			-- Notifications Group
 			-- =============================================
 			{ "<leader>nh", desc = "Notification History" },
+			{ "<leader>nl", desc = "Last Notification" },
+			{ "<leader>na", desc = "All Notifications" },
+			{ "<leader>nd", desc = "Dismiss Notifications" },
 
 			-- =============================================
 			-- Session Group

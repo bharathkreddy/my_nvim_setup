@@ -28,7 +28,8 @@ return {
 					lsp_saga = true,
 					mason = true,
 					neotest = true,
-						notify = true,
+					notify = true,
+					noice = true,
 					which_key = true,
 					native_lsp = {
 						enabled = true,

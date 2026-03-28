@@ -59,11 +59,6 @@ vim.keymap.set("v", "<leader>de", function() require("dapui").eval() end, { desc
 vim.keymap.set("n", "<leader>dt", function() require("dap").terminate() end, { desc = "Terminate" })
 vim.keymap.set("n", "<leader>dR", function() require("dap").restart() end, { desc = "Restart" })
 
--- Notification history (mini.notify)
-vim.keymap.set("n", "<leader>nh", function()
-	require("mini.notify").show_history()
-end, { desc = "Notification History" })
-
 -- Quick escape from insert mode
 vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit Insert Mode" })
 
