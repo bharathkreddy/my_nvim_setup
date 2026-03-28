@@ -267,6 +267,10 @@ return {
 			{ "[h", desc = "Prev Hunk" },
 			{ "[d", desc = "Prev Diagnostic" },
 			{ "]d", desc = "Next Diagnostic" },
+			{ "[m", desc = "Prev Function Start" },
+			{ "]m", desc = "Next Function Start" },
+			{ "[M", desc = "Prev Function End" },
+			{ "]M", desc = "Next Function End" },
 
 			-- =============================================
 			-- Fold Commands (z prefix)
