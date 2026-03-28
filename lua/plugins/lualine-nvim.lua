@@ -7,11 +7,11 @@
 
 return {
 	"nvim-lualine/lualine.nvim",
+	event = "VeryLazy",
 	config = function()
 		require("lualine").setup({
 			options = {
-				-- theme = "melange",
-				theme = "nightfox",
+				theme = "catppuccin",
 				icons_enabled = true,
 				section_separators = { left = "", right = "" },
 				component_separators = "|",

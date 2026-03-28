@@ -1,17 +1,21 @@
 return {
-	"glepnir/lspsaga.nvim",
-	lazy = false,
+	"nvimdev/lspsaga.nvim",
+	event = "LspAttach",
 	config = function()
 		require("lspsaga").setup({
-			-- keybinds for navigation in lspsaga window
-			move_in_saga = { prev = "<C-k>", next = "<C-j>" },
-			-- use enter to open file with finder
-			finder_action_keys = {
-				open = "<CR>",
+			scroll_preview = {
+				scroll_down = "<C-j>",
+				scroll_up = "<C-k>",
 			},
-			-- use enter to open file with definition preview
-			definition_action_keys = {
-				edit = "<CR>",
+			finder = {
+				keys = {
+					toggle_or_open = "<CR>",
+				},
+			},
+			definition = {
+				keys = {
+					edit = "<CR>",
+				},
 			},
 		})
 	end,

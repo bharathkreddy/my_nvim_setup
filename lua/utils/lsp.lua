@@ -1,41 +1,86 @@
+-- ================================================================================================
+-- TITLE : LSP Utilities
+-- ABOUT : LSP keymaps and on_attach function - ALL LSP keys under <leader>l
+-- ================================================================================================
+
 local M = {}
 
 M.on_attach = function(event)
-	local client = vim.lsp.get_client_by_id(event.data.client_id)
+	local client = vim.lsp.get_clients({ id = event.data.client_id })[1]
 	if not client then
 		return
 	end
 	local bufnr = event.buf
 	local keymap = vim.keymap.set
 	local opts = {
-		noremap = true, -- prevent recursive mapping
-		silent = true, -- don't print the command to the cli
-		buffer = bufnr, -- restrict the keymap to the local buffer number
+		noremap = true,
+		silent = true,
+		buffer = bufnr,
 	}
 
-	-- native neovim keymaps
-	keymap("n", "<leader>gp", "<cmd>Lspsaga peek_definition<CR>", opts) -- goto definition
-	keymap("n", "<leader>gD", "<cmd>Lspsaga goto_definition<CR>", opts) -- goto definition
-	keymap("n", "<leader>gS", "<cmd>vsplit | Lspsaga goto_definition<CR>", opts) -- goto definition in split
-	keymap("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- Code actions
-	keymap("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- Rename symbol
-	keymap("n", "<leader>lD", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- Line diagnostics (float)
-	keymap("n", "<leader>ld", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- Cursor diagnostics
-	keymap("n", "<leader>pd", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- previous diagnostic
-	keymap("n", "<leader>nd", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- next diagnostic
-	keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- hover documentation
+	-- =============================================
+	-- LSP Navigation - All under <leader>l
+	-- =============================================
 
-	-- fzf-lua keymaps
-	keymap("n", "<leader>fd", "<cmd>FzfLua lsp_finder<CR>", opts) -- LSP Finder (definition + references)
-	keymap("n", "<leader>fr", "<cmd>FzfLua lsp_references<CR>", opts) -- Show all references to the symbol under the cursor
-	keymap("n", "<leader>ft", "<cmd>FzfLua lsp_typedefs<CR>", opts) -- Jump to the type definition of the symbol under the cursor
-	keymap("n", "<leader>fs", "<cmd>FzfLua lsp_document_symbols<CR>", opts) -- List all symbols (functions, classes, etc.) in the current file
-	keymap("n", "<leader>fw", "<cmd>FzfLua lsp_workspace_symbols<CR>", opts) -- Search for any symbol across the entire project/workspace
-	keymap("n", "<leader>fi", "<cmd>FzfLua lsp_implementations<CR>", opts) -- Go to implementation
+	-- Peek definition (shared across all LSPs)
+	keymap("n", "<leader>lp", "<cmd>Lspsaga peek_definition<CR>", vim.tbl_extend("force", opts, { desc = "Peek Definition" }))
 
-	-- Order Imports (if supported by the client LSP)
+	-- Go to definition - special handling for C#
+	if client.name == "omnisharp" then
+		keymap("n", "<leader>ld", function()
+			require("omnisharp_extended").lsp_definition()
+		end, vim.tbl_extend("force", opts, { desc = "Go to Definition" }))
+		keymap("n", "<leader>lD", function()
+			vim.cmd("vsplit")
+			require("omnisharp_extended").lsp_definition()
+		end, vim.tbl_extend("force", opts, { desc = "Definition (Split)" }))
+		keymap("n", "<leader>li", function()
+			require("omnisharp_extended").lsp_implementation()
+		end, vim.tbl_extend("force", opts, { desc = "Implementation" }))
+		keymap("n", "<leader>lr", function()
+			require("omnisharp_extended").lsp_references()
+		end, vim.tbl_extend("force", opts, { desc = "References" }))
+		keymap("n", "<leader>ly", function()
+			require("omnisharp_extended").lsp_type_definition()
+		end, vim.tbl_extend("force", opts, { desc = "Type Definition" }))
+	else
+		keymap("n", "<leader>ld", "<cmd>FzfLua lsp_definitions<cr>", vim.tbl_extend("force", opts, { desc = "Go to Definition" }))
+		keymap("n", "<leader>lD", function()
+			vim.cmd("vsplit")
+			vim.cmd("FzfLua lsp_definitions")
+		end, vim.tbl_extend("force", opts, { desc = "Definition (Split)" }))
+		keymap("n", "<leader>li", "<cmd>FzfLua lsp_implementations<CR>", vim.tbl_extend("force", opts, { desc = "Implementation" }))
+		keymap("n", "<leader>lr", "<cmd>FzfLua lsp_references<CR>", vim.tbl_extend("force", opts, { desc = "References" }))
+		keymap("n", "<leader>ly", "<cmd>FzfLua lsp_typedefs<CR>", vim.tbl_extend("force", opts, { desc = "Type Definition" }))
+	end
+
+	-- =============================================
+	-- LSP Actions
+	-- =============================================
+	keymap("n", "<leader>la", "<cmd>Lspsaga code_action<CR>", vim.tbl_extend("force", opts, { desc = "Code Action" }))
+	keymap("n", "<leader>ln", "<cmd>Lspsaga rename<CR>", vim.tbl_extend("force", opts, { desc = "Rename" }))
+	keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>", vim.tbl_extend("force", opts, { desc = "Hover Doc" }))
+
+	-- =============================================
+	-- LSP Diagnostics
+	-- =============================================
+	keymap("n", "<leader>lL", "<cmd>Lspsaga show_line_diagnostics<CR>", vim.tbl_extend("force", opts, { desc = "Line Diagnostics" }))
+	keymap("n", "<leader>lc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", vim.tbl_extend("force", opts, { desc = "Cursor Diagnostics" }))
+	keymap("n", "<leader>l[", "<cmd>Lspsaga diagnostic_jump_prev<CR>", vim.tbl_extend("force", opts, { desc = "Prev Diagnostic" }))
+	keymap("n", "<leader>l]", "<cmd>Lspsaga diagnostic_jump_next<CR>", vim.tbl_extend("force", opts, { desc = "Next Diagnostic" }))
+
+	-- =============================================
+	-- LSP Find (FZF-lua)
+	-- =============================================
+	keymap("n", "<leader>lf", "<cmd>FzfLua lsp_finder<CR>", vim.tbl_extend("force", opts, { desc = "LSP Finder" }))
+	keymap("n", "<leader>ls", "<cmd>FzfLua lsp_document_symbols<CR>", vim.tbl_extend("force", opts, { desc = "Document Symbols" }))
+	keymap("n", "<leader>lS", "<cmd>FzfLua lsp_workspace_symbols<CR>", vim.tbl_extend("force", opts, { desc = "Workspace Symbols" }))
+
+	-- =============================================
+	-- LSP Organize Imports
+	-- =============================================
 	if client:supports_method("textDocument/codeAction", bufnr) then
-		keymap("n", "<leader>oi", function()
+		keymap("n", "<leader>lo", function()
 			vim.lsp.buf.code_action({
 				context = {
 					only = { "source.organizeImports" },
@@ -44,23 +89,13 @@ M.on_attach = function(event)
 				apply = true,
 				bufnr = bufnr,
 			})
-			-- format after changing import order
+			-- Format after a short delay to let the code action apply
 			vim.defer_fn(function()
 				vim.lsp.buf.format({ bufnr = bufnr })
-			end, 50) -- slight delay to allow for the import order to go first
-		end, opts)
+			end, 200)
+		end, vim.tbl_extend("force", opts, { desc = "Organize Imports" }))
 	end
 
-	-- === DAP keymaps ===
-	if client.name == "rust-analyzer" then -- debugging only configured for Rust
-		local dap = require("dap")
-		keymap("n", "<leader>dc", dap.continue, opts) -- Continue / Start
-		keymap("n", "<leader>do", dap.step_over, opts) -- Step over
-		keymap("n", "<leader>di", dap.step_into, opts) -- Step into
-		keymap("n", "<leader>dO", dap.step_out, opts) -- Step out
-		keymap("n", "<leader>db", dap.toggle_breakpoint, opts) -- Toggle breakpoint
-		keymap("n", "<leader>dr", dap.repl.open, opts) -- Open DAP REPL
-	end
 end
 
 return M

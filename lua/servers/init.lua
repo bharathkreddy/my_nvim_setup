@@ -30,7 +30,7 @@ vim.lsp.enable({
   'emmet_ls',
   'yamlls',
   'tailwindcss',
-  'solidity_ls_nomicfoundation',
+  'solidity',
   'efm',
   'omnisharp',
 })

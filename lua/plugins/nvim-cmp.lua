@@ -28,7 +28,6 @@ return {
 		"hrsh7th/cmp-buffer", -- nvim-cmp source for words from the current buffer
 		"hrsh7th/cmp-path", -- nvim-cmp source for filesystem paths
     "hrsh7th/cmp-cmdline",
-		"hrsh7th/cmp-nvim-lsp-signature-help", -- function signatures
 	},
 	config = function()
 		local lspkind = require("lspkind")
@@ -68,7 +67,6 @@ return {
 				format = lspkind.cmp_format({
 					mode = "symbol_text",
 					menu = {
-						copilot = "",
 						luasnip = "",
 						buffer = "",
 						path = "",
@@ -110,19 +108,15 @@ return {
 			}),
 
 			sources = {
-				{ name = "copilot", group_index = 2 },
 				{ name = "nvim_lsp", group_index = 2 },
 				{ name = "luasnip", group_index = 2 },
 				{ name = "buffer", group_index = 3 },
 				{ name = "path", group_index = 3 },
-				{ name = "nvim_lsp_signature_help" },
 			},
 
 			sorting = {
 				priority_weight = 2,
 				comparators = {
-					-- Prioritize copilot suggestions
-					require("copilot_cmp.comparators").prioritize,
 					cmp.config.compare.offset,
 					cmp.config.compare.exact,
 					cmp.config.compare.score,

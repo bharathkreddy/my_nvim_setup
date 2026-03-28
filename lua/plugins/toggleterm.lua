@@ -1,15 +1,57 @@
+-- ================================================================================================
+-- TITLE : toggleterm.nvim
+-- ABOUT : Terminal management for Neovim
+-- LINKS :
+--   > github : https://github.com/akinsho/toggleterm.nvim
+-- ================================================================================================
+
 return {
 	"akinsho/toggleterm.nvim",
 	version = "*",
 	keys = {
-		{ "<C-\\>", "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
-		{ "<leader>tH", "<cmd>ToggleTerm direction=horizontal<cr>", desc = "Terminal Horizontal" },
-		{ "<leader>tV", "<cmd>ToggleTerm direction=vertical<cr>", desc = "Terminal Vertical" },
-		{ "<leader>tF", "<cmd>ToggleTerm direction=float<cr>", desc = "Terminal Float" },
-		{ "<leader>tA", "<cmd>ToggleTermToggleAll<cr>", desc = "Toggle All Terminals" },
-		{ "<leader>gG", function()
-			require("toggleterm.terminal").Terminal:new({ cmd = "lazygit", direction = "float" }):toggle()
-		end, desc = "LazyGit (Terminal)" },
+		-- Use functions to capture the count prefix (e.g., 2<leader>Th opens terminal #2)
+		{
+			"<leader>Th",
+			function()
+				local count = vim.v.count1
+				vim.cmd(count .. "ToggleTerm direction=horizontal")
+			end,
+			desc = "Horizontal",
+		},
+		{
+			"<leader>Tv",
+			function()
+				local count = vim.v.count1
+				vim.cmd(count .. "ToggleTerm direction=vertical")
+			end,
+			desc = "Vertical",
+		},
+		{
+			"<leader>Tf",
+			function()
+				local count = vim.v.count1
+				vim.cmd(count .. "ToggleTerm direction=float")
+			end,
+			desc = "Float",
+		},
+		{ "<leader>Ta", "<cmd>ToggleTermToggleAll<cr>", desc = "Toggle All" },
+		{
+			"<leader>Tl",
+			function()
+				local terms = require("toggleterm.terminal").get_all()
+				if #terms == 0 then
+					print("No active terminals")
+				else
+					local lines = { "Active terminals:" }
+					for _, t in ipairs(terms) do
+						local status = t:is_open() and "visible" or "hidden"
+						table.insert(lines, string.format("  #%d [%s] - %s", t.id, status, t.direction))
+					end
+					print(table.concat(lines, "\n"))
+				end
+			end,
+			desc = "List Terminals",
+		},
 	},
 	opts = {
 		size = function(term)

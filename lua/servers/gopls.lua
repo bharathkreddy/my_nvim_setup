@@ -9,6 +9,6 @@
 return function(capabilities)
 	vim.lsp.config('gopls', {
 		capabilities = capabilities,
-		filetypes = { "go" },
+		filetypes = { "go", "gomod", "gowork", "gotmpl" },
 	})
 end

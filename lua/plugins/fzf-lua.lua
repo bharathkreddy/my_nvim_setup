@@ -1,13 +1,13 @@
 -- ================================================================================================
 -- TITLE : fzf-lua
+-- ABOUT : Lua-based fzf wrapper and integration - Find files/text ONLY
 -- LINKS :
 --   > github : https://github.com/ibhagwan/fzf-lua
--- ABOUT : lua-based fzf wrapper and integration.
+-- NOTE  : LSP symbols moved to <leader>l group in utils/lsp.lua
 -- ================================================================================================
 
 return {
 	"ibhagwan/fzf-lua",
-	lazy = false,
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	keys = {
 		{
@@ -15,56 +15,63 @@ return {
 			function()
 				require("fzf-lua").files()
 			end,
-			desc = "FZF Files",
+			desc = "Files",
 		},
 		{
 			"<leader>fg",
 			function()
 				require("fzf-lua").live_grep()
 			end,
-			desc = "FZF Live Grep",
+			desc = "Live Grep",
 		},
 		{
 			"<leader>fb",
 			function()
 				require("fzf-lua").buffers()
 			end,
-			desc = "FZF Buffers",
+			desc = "Buffers",
 		},
 		{
 			"<leader>fh",
 			function()
 				require("fzf-lua").help_tags()
 			end,
-			desc = "FZF Help Tags",
+			desc = "Help Tags",
 		},
 		{
-			"<leader>fx",
+			"<leader>fr",
+			function()
+				require("fzf-lua").oldfiles()
+			end,
+			desc = "Recent Files",
+		},
+		{
+			"<leader>fw",
+			function()
+				require("fzf-lua").grep_cword()
+			end,
+			desc = "Grep Word",
+		},
+		{
+			"<leader>fW",
+			function()
+				require("fzf-lua").grep_cWORD()
+			end,
+			desc = "Grep WORD",
+		},
+		{
+			"<leader>fd",
 			function()
 				require("fzf-lua").diagnostics_document()
 			end,
-			desc = "FZF Diagnostics Document",
+			desc = "Diagnostics (Document)",
 		},
 		{
-			"<leader>fX",
+			"<leader>fD",
 			function()
 				require("fzf-lua").diagnostics_workspace()
 			end,
-			desc = "FZF Diagnostics Workspace",
-		},
-		{
-			"<leader>fs",
-			function()
-				require("fzf-lua").lsp_document_symbols()
-			end,
-			desc = "FZF Document Symbols",
-		},
-		{
-			"<leader>fS",
-			function()
-				require("fzf-lua").lsp_workspace_symbols()
-			end,
-			desc = "FZF Workspace Symbols",
+			desc = "Diagnostics (Workspace)",
 		},
 	},
 

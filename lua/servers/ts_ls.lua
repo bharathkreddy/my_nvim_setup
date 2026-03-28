@@ -6,7 +6,7 @@
 
 --- @param capabilities table LSP client capabilities (typically from nvim-cmp or similar)
 --- @return nil
-return function( capabilities)
+return function(capabilities)
 	vim.lsp.config('ts_ls', {
 		capabilities = capabilities,
 		filetypes = {

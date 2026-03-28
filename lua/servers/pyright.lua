@@ -12,6 +12,8 @@ return function(capabilities)
 		settings = {
 			pyright = {
 				disableOrganizeImports = false,
+			},
+			python = {
 				analysis = {
 					useLibraryCodeForTypes = true,
 					autoSearchPaths = true,

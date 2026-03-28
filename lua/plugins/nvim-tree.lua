@@ -7,7 +7,11 @@
 
 return {
 	"nvim-tree/nvim-tree.lua",
-	lazy = false,
+	cmd = { "NvimTreeToggle", "NvimTreeFocus", "NvimTreeOpen" },
+	keys = {
+		{ "<leader>E", "<Cmd>NvimTreeFocus<CR>", desc = "Focus File Explorer" },
+		{ "<leader>e", "<Cmd>NvimTreeToggle<CR>", desc = "Toggle File Explorer" },
+	},
 	config = function()
 		-- Remove background color from the NvimTree window (ui fix)
 		vim.cmd([[hi NvimTreeNormal guibg=NONE ctermbg=NONE]])

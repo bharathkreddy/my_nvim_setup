@@ -2,7 +2,6 @@
 -- TITLE : GitHub Copilot
 -- LINKS :
 --   > github : https://github.com/zbirenbaum/copilot.lua
---   > cmp    : https://github.com/zbirenbaum/copilot-cmp
 -- ABOUT : Fully featured Lua replacement for github/copilot.vim
 -- ================================================================================================
 
@@ -18,12 +17,12 @@ return {
 					auto_trigger = true,
 					debounce = 75,
 					keymap = {
-						accept = false,             -- Tab to accept full suggestion
+						accept = false,             -- Tab to accept full suggestion (via cmp)
 						accept_word = "<C-Right>",  -- Ctrl+Right to accept word
 						accept_line = "<C-Down>",   -- Ctrl+Down to accept line
-						next = "<C-n>",             -- Ctrl+] next suggestion
-						prev = "<C-p>",             -- Ctrl+[ prev suggestion
-						dismiss = "<C-e>",          -- Ctrl+e dismiss
+						next = "<M-]>",             -- Alt+] next suggestion
+						prev = "<M-[>",             -- Alt+[ prev suggestion
+						dismiss = "<M-e>",          -- Alt+e dismiss
 					},
 				},
 				panel = {
@@ -38,19 +37,9 @@ return {
 					},
 				},
 				filetypes = {
-					yaml = true,
-					markdown = true,
-					gitcommit = true,
 					["*"] = true,
 				},
 			})
-		end,
-	},
-	{
-		"zbirenbaum/copilot-cmp",
-		dependencies = { "zbirenbaum/copilot.lua" },
-		config = function()
-			require("copilot_cmp").setup()
 		end,
 	},
 }

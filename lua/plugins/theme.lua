@@ -1,31 +1,55 @@
 -- ================================================================================================
--- TITLE : melange-nvim
--- ABOUT : A subtle, warm colorscheme for Neovim inspired by Sublime Text's Melange theme.
+-- TITLE : Theme Configuration
+-- ABOUT : Catppuccin as default theme with nightfox available as alternative
 -- LINKS :
---   > github : https://github.com/savq/melange-nvim
+--   > catppuccin : https://github.com/catppuccin/nvim
+--   > nightfox   : https://github.com/EdenEast/nightfox.nvim
 -- ================================================================================================
 
 return {
-	-- "savq/melange-nvim",
-	-- lazy = false,
-	-- priority = 1000,
-	-- config = function()
-	-- 	vim.cmd("colorscheme melange")
-	-- end,
 	{
-		"xiyaowong/nvim-transparent",
+		"catppuccin/nvim",
+		name = "catppuccin",
 		lazy = false,
-		priority = 999,
+		priority = 1000,
+		config = function()
+			require("catppuccin").setup({
+				flavour = "mocha", -- latte, frappe, macchiato, mocha
+				transparent_background = true,
+				integrations = {
+					cmp = true,
+					gitsigns = true,
+					nvimtree = true,
+					treesitter = true,
+					mini = true,
+					fidget = true,
+					flash = true,
+					harpoon = true,
+					lsp_saga = true,
+					mason = true,
+					neotest = true,
+						notify = true,
+					which_key = true,
+					native_lsp = {
+						enabled = true,
+						underlines = {
+							errors = { "undercurl" },
+							hints = { "undercurl" },
+							warnings = { "undercurl" },
+							information = { "undercurl" },
+						},
+					},
+				},
+			})
+			vim.cmd("colorscheme catppuccin")
+		end,
 	},
-
+	-- Nightfox available as alternative: :colorscheme duskfox
 	{
 		"EdenEast/nightfox.nvim",
-		lazy = false,
-		priority = 999,
+		lazy = true,
 		config = function()
-			-- load duskfox palette
 			local palette = require("nightfox.palette").load("duskfox")
-
 			require("nightfox").setup({
 				options = {
 					transparent = true,
@@ -36,8 +60,6 @@ return {
 					},
 				},
 			})
-
-			vim.cmd("colorscheme duskfox")
 		end,
 	},
 }

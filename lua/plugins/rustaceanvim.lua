@@ -5,13 +5,11 @@
 --   > github : https://github.com/mrcjkb/rustaceanvim
 -- ================================================================================================
 
-local on_attach = require("utils.lsp").on_attach
-
 local get_codelldb_adapter = function()
 	local mason_registry = require("mason-registry")
 	if mason_registry.is_installed("codelldb") then
 		local codelldb = mason_registry.get_package("codelldb")
-		local ok, install_path = pcall(codelldb:get_install_path(), codelldb)
+		local ok, install_path = pcall(codelldb.get_install_path, codelldb)
 		local extension_path
 		if ok and install_path then
 			extension_path = install_path .. "/extension/"
@@ -37,7 +35,6 @@ local config = function()
 			},
 		},
 		server = {
-			on_attach = on_attach,
 			settings = {
 				["rust-analyzer"] = {
 					cargo = {

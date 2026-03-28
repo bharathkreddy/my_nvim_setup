@@ -39,7 +39,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		if vim.tbl_isempty(efm) then
 			return
 		end
-		vim.lsp.buf.format({ name = "efm", async = true })
+		vim.lsp.buf.format({ name = "efm" })
 	end,
 })
 

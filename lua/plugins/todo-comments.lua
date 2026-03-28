@@ -1,11 +1,18 @@
+-- ================================================================================================
+-- TITLE : todo-comments.nvim
+-- ABOUT : Highlight, list and search todo comments
+-- LINKS :
+--   > github : https://github.com/folke/todo-comments.nvim
+-- ================================================================================================
+
 return {
-  "folke/todo-comments.nvim",
-  dependencies = { "nvim-lua/plenary.nvim" },
-  event = { "BufReadPost", "BufNewFile" },
-  keys = {
-    { "<leader>ft", "<cmd>TodoFzfLua<cr>", desc = "Find TODOs" },
-    { "]t", function() require("todo-comments").jump_next() end, desc = "Next TODO" },
-    { "[t", function() require("todo-comments").jump_prev() end, desc = "Prev TODO" },
-  },
-  opts = {},
+	"folke/todo-comments.nvim",
+	dependencies = { "nvim-lua/plenary.nvim" },
+	event = { "BufReadPost", "BufNewFile" },
+	keys = {
+		{ "<leader>fT", "<cmd>TodoFzfLua<cr>", desc = "Find TODOs" },
+		{ "]t", function() require("todo-comments").jump_next() end, desc = "Next TODO" },
+		{ "[t", function() require("todo-comments").jump_prev() end, desc = "Prev TODO" },
+	},
+	opts = {},
 }

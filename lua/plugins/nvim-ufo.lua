@@ -15,7 +15,6 @@ return {
 		{ "zr", function() require("ufo").openFoldsExceptKinds() end, desc = "Open Folds Except Kinds" },
 		{ "zm", function() require("ufo").closeFoldsWith() end, desc = "Close Folds With" },
 		{ "zK", function() require("ufo").peekFoldedLinesUnderCursor() end, desc = "Peek Fold" },
-		{ "zp", function() require("ufo").peekFoldedLinesUnderCursor() end, desc = "Peek Fold" },
 	},
 	opts = {
 		provider_selector = function(_, filetype, buftype)

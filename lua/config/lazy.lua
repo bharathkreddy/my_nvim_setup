@@ -37,16 +37,18 @@ require("lazy").setup({
 	spec = {
 		{ import = plugins_dir },
 	},
-	rtp = {
-		disabled_plugins = {
-			"netrw",
-			"netrwPlugin",
+	performance = {
+		rtp = {
+			disabled_plugins = {
+				"netrw",
+				"netrwPlugin",
+			},
 		},
 	},
 	install = {
 		colorscheme = {
 			-- "melange"
-			"nightfox,",
+			"nightfox",
 		},
 	},
 	checker = { enabled = true },

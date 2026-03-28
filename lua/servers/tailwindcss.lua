@@ -10,6 +10,8 @@ return function(capabilities)
 	vim.lsp.config('tailwindcss', {
 		capabilities = capabilities,
 		filetypes = {
+			"html",
+			"css",
 			"javascript",
 			"javascriptreact",
 			"typescript",

@@ -7,6 +7,8 @@
 
 return {
 	"uga-rosa/ccc.nvim",
+	cmd = { "CccPick", "CccConvert", "CccHighlighterToggle" },
+	event = "BufReadPre",
 	config = function()
 		require("ccc").setup({
 			highlighter = {

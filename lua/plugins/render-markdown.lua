@@ -11,7 +11,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		"nvim-tree/nvim-web-devicons",
 	},
-	ft = { "markdown", "md" },
+	ft = { "markdown" },
 	keys = {
 		{ "<leader>mr", function() require("render-markdown").toggle() end, desc = "Toggle Markdown Render" },
 	},
