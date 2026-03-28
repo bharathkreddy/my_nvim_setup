@@ -17,7 +17,26 @@ M.on_attach = function(event)
 	end
 
 	-- LSP Navigation (idiomatic gd/gD/K)
-	map("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", "Go to Definition")
+	if client.name == "omnisharp" then
+		map("n", "gd", function() require("omnisharp_extended").lsp_definition() end, "Go to Definition")
+		map("n", "<leader>ld", function()
+			vim.cmd("vsplit")
+			require("omnisharp_extended").lsp_definition()
+		end, "Definition (Split)")
+		map("n", "<leader>li", function() require("omnisharp_extended").lsp_implementation() end, "Implementation")
+		map("n", "<leader>lr", function() require("omnisharp_extended").lsp_references() end, "References")
+		map("n", "<leader>ly", function() require("omnisharp_extended").lsp_type_definition() end, "Type Definition")
+	else
+		map("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", "Go to Definition")
+		map("n", "<leader>ld", function()
+			vim.cmd("vsplit")
+			require("fzf-lua").lsp_definitions()
+		end, "Definition (Split)")
+		map("n", "<leader>li", "<cmd>FzfLua lsp_implementations<CR>", "Implementation")
+		map("n", "<leader>lr", "<cmd>FzfLua lsp_references<CR>", "References")
+		map("n", "<leader>ly", "<cmd>FzfLua lsp_typedefs<CR>", "Type Definition")
+	end
+
 	map("n", "gD", "<cmd>Lspsaga peek_definition<CR>", "Peek Definition")
 	map("n", "K", "<cmd>Lspsaga hover_doc<CR>", "Hover Doc")
 
@@ -26,13 +45,6 @@ M.on_attach = function(event)
 	map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Next Diagnostic")
 
 	-- LSP Actions (<leader>l)
-	map("n", "<leader>ld", function()
-		vim.cmd("vsplit")
-		vim.cmd("FzfLua lsp_definitions")
-	end, "Definition (Split)")
-	map("n", "<leader>li", "<cmd>FzfLua lsp_implementations<CR>", "Implementation")
-	map("n", "<leader>lr", "<cmd>FzfLua lsp_references<CR>", "References")
-	map("n", "<leader>ly", "<cmd>FzfLua lsp_typedefs<CR>", "Type Definition")
 	map("n", "<leader>la", "<cmd>Lspsaga code_action<CR>", "Code Action")
 	map("n", "<leader>ln", "<cmd>Lspsaga rename<CR>", "Rename")
 

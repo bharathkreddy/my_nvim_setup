@@ -9,6 +9,7 @@
 return {
 	"ibhagwan/fzf-lua",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
+	cmd = "FzfLua",
 	keys = {
 		{ "<leader>ff", function() require("fzf-lua").files() end, desc = "Files" },
 		{ "<leader>fg", function() require("fzf-lua").live_grep() end, desc = "Live Grep" },
